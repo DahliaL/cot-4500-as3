@@ -1,45 +1,41 @@
 from decimal import Decimal
 import numpy as np
 
-print(np.__file__)
-
 def f(t, y):
     return t - y**2
 
 
-def problem_1():
-    # problem 1
-    t0, tn = 0, 2
-    h = (tn - t0) / 10
+def problem_1(start, end, iterr, beg_val):
+    h = (end - start) / iterr
 
-    y0 = 1
+    x0, y0 = beg_val
 
-    t = [t0]
+    t = [start]
     y = [y0]
 
-    for i in range(10): # this does what the modified_eulers.py does
+    for i in range(10):
         y_next = y[-1] + h * f(t[-1], y[-1])
         t_next = t[-1] + h
         t.append(t_next)
         y.append(y_next)
 
-    print("{:.16f}\n".format(y[10]))
+    print("{:.5f}\n".format(y[10]))
 
 
-def problem_2(start, end, iter, beg_val):
-    steps = (end - start) / iter
+def problem_2(start, end, iterr, beg_val):
+    steps = (end - start) / iterr
     x, y = beg_val
 
-    for i in range(iter):
-        k1 = steps * f(x, y)
-        k2 = steps * f(x + steps/2, y + k1/2)
-        k3 = steps * f(x + steps/2, y + k2/2)
-        k4 = steps * f(x + steps, y + k3)
+    for i in range(iterr):
+        s1 = steps * f(x, y)
+        s2 = steps * f(x + steps/2, y + s1/2)
+        s3 = steps * f(x + steps/2, y + s2/2)
+        s4 = steps * f(x + steps, y + s3)
         
-        y += (k1 + 2*k2 + 2*k3 + k4) / 6
+        y += (s1 + 2*s2 + 2*s3 + s4) / 6
         x += steps
     
-    print("{:.16f}\n".format(y))
+    print("{:.5f}\n".format(y))
 
 
 def problem_3(arr):
@@ -91,14 +87,14 @@ def problem_4(mat):
 
     det_U = np.linalg.det(U)
 
-    print("{:.16f}\n".format(det_U))
+    print("{:.5f}\n".format(det_U))
 
     print(L, end='\n\n')
     print(U, end = '\n\n')
 
 def diag_dom(matrix):
-    diagonal = np.abs(matrix.diagonal())
-    others = np.sum(np.abs(matrix), axis=1) - diagonal
+    diagonal = np.abs(matrix.diagonal()) #absolute val of diag elements
+    others = np.sum(np.abs(matrix), axis=1) - diagonal # sum of rows minus diag elements
     
     return np.all(diagonal >= others)
 
@@ -110,10 +106,10 @@ def problem_5(array):
 def pos_def(arr):
     # is it a square?
     if arr.shape[0] != arr.shape[1]:
-        return False
+        return False # it cant be positive definite
     # is it symmetric
     if not np.allclose(arr, arr.T):
-        return False
+        return False # it cant be either
     # are all the eigenvalues positive
     eigenvalues = np.linalg.eigvals(arr)
     
@@ -125,9 +121,9 @@ def problem_6(arr):
     
 
 def main():
-    problem_1()
-
     initpoint = (0, 1)
+    problem_1(0, 2, 10, initpoint)
+
     problem_2(0, 2, 10, initpoint)
     
     problem_3(np.array(np.mat('2 -1 1 6; 1 3 1 0; 1 5 4 -3')))
