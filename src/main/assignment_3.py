@@ -68,6 +68,7 @@ def problem_3(arr):
     b1[2] = ceil(b1[2]) + 1
     print(b1, end = '\n\n')
 
+
 def problem_4(mat):
     # Get the shape of the matrix
     n = mat.shape[0]
@@ -120,7 +121,7 @@ def pos_def(arr):
 
 
 def problem_6(arr):
-    print(pos_def(arr), end = '\n')
+    print(pos_def(arr), end = '')
     
 
 def main():
