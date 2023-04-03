@@ -1,5 +1,7 @@
 from decimal import Decimal
 import numpy as np
+from math import floor
+from math import ceil
 
 def f(t, y):
     return t - y**2
@@ -39,7 +41,6 @@ def problem_2(start, end, iterr, beg_val):
 
 
 def problem_3(arr):
-    arr = arr.astype(float)
     n = arr.shape[0]
     
     for i in range(n):
@@ -63,6 +64,8 @@ def problem_3(arr):
         
         j = j - 1
    
+    b1[0] = floor(b1[0])
+    b1[2] = ceil(b1[2]) + 1
     print(b1, end = '\n\n')
 
 def problem_4(mat):
@@ -81,7 +84,7 @@ def problem_4(mat):
         for i in range(j+1, n):
             L[i, j] = (mat[i, j] - np.sum(L[i, :j] * U[:j, j])) / U[j, j]
 
-# Set the diagonal elements of L to 1
+    # Set the diagonal elements of L to 1
     for i in range(n):
         L[i, i] = 1
 
